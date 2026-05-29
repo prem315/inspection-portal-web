@@ -139,7 +139,7 @@ export default function TeamManagement({
           variant="outline"
           size="sm"
           disabled={isRefreshing}
-          className="text-xs flex items-center gap-1.5"
+          className="text-sm flex items-center gap-1.5"
         >
           <RefreshCw className={`h-3.5 w-3.5 ${isRefreshing ? "animate-spin" : ""}`} />
           {isRefreshing ? "Refreshing..." : "Refresh lists"}
@@ -152,7 +152,7 @@ export default function TeamManagement({
           <div className="bg-white rounded-2xl border border-border shadow-sm overflow-hidden">
             <div className="px-6 py-4 border-b border-border flex items-center gap-2 bg-slate-50/50">
               <UserCheck className="h-5 w-5 text-primary" />
-              <h2 className="text-sm font-bold text-foreground">Active Team Members ({assignments.length})</h2>
+              <h2 className="text-base font-bold text-foreground">Active Team Members ({assignments.length})</h2>
             </div>
 
             {assignments.length === 0 ? (
@@ -171,12 +171,12 @@ export default function TeamManagement({
                     <li key={assignment.id} className="px-6 py-4 flex items-center justify-between gap-4">
                       <div className="min-w-0">
                         <p className="text-sm font-semibold text-foreground truncate">{name}</p>
-                        <p className="text-xs text-muted-foreground truncate">{email}</p>
-                        <p className="text-[10px] text-muted-foreground mt-1">
+                        <p className="text-sm text-muted-foreground truncate">{email}</p>
+                        <p className="text-xs text-muted-foreground mt-1">
                           Assigned on {formatDate(assignment.createdAt || assignment.assignedAt)}
                         </p>
                       </div>
-                      <span className="text-[10px] font-bold px-2.5 py-1 rounded-full bg-secondary text-secondary-foreground shrink-0 flex items-center gap-1">
+                      <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-secondary text-secondary-foreground shrink-0 flex items-center gap-1">
                         <Shield className="h-3 w-3" />
                         {roleLabel}
                       </span>
@@ -195,15 +195,15 @@ export default function TeamManagement({
             <div className="bg-white rounded-2xl border border-border shadow-sm p-6 space-y-4">
               <div className="flex items-center gap-2">
                 <UserPlus className="h-5 w-5 text-primary" />
-                <h2 className="text-sm font-bold text-foreground">Invite to Project</h2>
+                <h2 className="text-base font-bold text-foreground">Invite to Project</h2>
               </div>
-              <p className="text-xs text-muted-foreground">
+              <p className="text-sm text-muted-foreground">
                 Send an invitation email to add an engineer or inspector to this project.
               </p>
 
               <form onSubmit={handleInvite} className="space-y-4 pt-2">
                 <div className="space-y-1.5">
-                  <label htmlFor="email" className="text-xs font-bold uppercase tracking-wide">
+                  <label htmlFor="email" className="text-sm font-bold uppercase tracking-wide text-slate-500">
                     Email address
                   </label>
                   <input
@@ -217,7 +217,7 @@ export default function TeamManagement({
                 </div>
 
                 <div className="space-y-1.5">
-                  <label htmlFor="role" className="text-xs font-bold uppercase tracking-wide">
+                  <label htmlFor="role" className="text-sm font-bold uppercase tracking-wide text-slate-500">
                     Project Role
                   </label>
                   <select
@@ -232,14 +232,14 @@ export default function TeamManagement({
                 </div>
 
                 {inviteError && (
-                  <div className="flex items-start gap-2 p-3 rounded-lg bg-red-50 border border-red-200/60 text-red-800 text-xs">
+                  <div className="flex items-start gap-2 p-3 rounded-lg bg-red-50 border border-red-200/60 text-red-800 text-sm">
                     <AlertCircle className="h-4 w-4 shrink-0 mt-0.5" />
                     <span>{inviteError}</span>
                   </div>
                 )}
 
                 {inviteSuccess && (
-                  <div className="flex items-start gap-2 p-3 rounded-lg bg-green-50 border border-green-200/60 text-green-800 text-xs">
+                  <div className="flex items-start gap-2 p-3 rounded-lg bg-green-50 border border-green-200/60 text-green-800 text-sm">
                     <CheckCircle2 className="h-4 w-4 shrink-0 mt-0.5" />
                     <span>{inviteSuccess}</span>
                   </div>
@@ -248,7 +248,7 @@ export default function TeamManagement({
                 <Button
                   type="submit"
                   disabled={isInviting}
-                  className="w-full bg-primary text-white hover:bg-primary/95 text-xs font-bold h-10 rounded-lg shadow-sm"
+                  className="w-full bg-primary text-white hover:bg-primary/95 text-sm font-bold h-10 rounded-lg shadow-sm"
                 >
                   {isInviting ? (
                     <>
@@ -267,11 +267,11 @@ export default function TeamManagement({
           <div className="bg-white rounded-2xl border border-border shadow-sm overflow-hidden">
             <div className="px-6 py-4 border-b border-border flex items-center gap-2 bg-slate-50/50">
               <Clock className="h-5 w-5 text-primary" />
-              <h2 className="text-sm font-bold text-foreground">Pending Invites ({invitations.length})</h2>
+              <h2 className="text-base font-bold text-foreground">Pending Invites ({invitations.length})</h2>
             </div>
 
             {invitations.length === 0 ? (
-              <div className="p-8 text-center text-xs text-muted-foreground">
+              <div className="p-8 text-center text-sm text-muted-foreground">
                 No pending invitations.
               </div>
             ) : (
@@ -286,16 +286,16 @@ export default function TeamManagement({
                       <div className="min-w-0">
                         <p className="text-sm font-semibold text-foreground truncate">{invite.email}</p>
                         <div className="flex flex-wrap items-center gap-2 mt-1">
-                          <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-muted text-muted-foreground">
+                          <span className="text-xs font-bold px-1.5 py-0.5 rounded bg-muted text-muted-foreground">
                             {roleLabel}
                           </span>
-                          <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded ${
+                          <span className={`text-xs font-bold px-1.5 py-0.5 rounded ${
                             isExpired ? "bg-red-50 text-red-700" : "bg-yellow-50 text-yellow-700"
                           }`}>
                             {isExpired ? "EXPIRED" : invite.status}
                           </span>
                         </div>
-                        <p className="text-[9px] text-muted-foreground mt-2">
+                        <p className="text-xs text-muted-foreground mt-2">
                           Expires: {formatDate(invite.expiresAt)}
                         </p>
                       </div>

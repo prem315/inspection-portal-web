@@ -10,6 +10,7 @@ import {
 } from "@/app/actions/checkpoints";
 import { getPresignedUrl, createEvidence } from "@/app/actions/evidence";
 import type { Checkpoint, CheckpointResult } from "@/lib/types";
+import EvidenceGallery from "@/components/dashboard/EvidenceGallery";
 
 const RESULT_STYLES: Record<
   CheckpointResult,
@@ -76,22 +77,23 @@ export default function CheckpointWorkbench({
     setUploadingId(checkpointId);
     setError(null);
     try {
-      const presign = await getPresignedUrl(file.name, file.type);
+      const mimeType = file.type || (file.name.toLowerCase().endsWith(".pdf") ? "application/pdf" : "image/jpeg");
+      const presign = await getPresignedUrl(file.name, mimeType);
       const uploadRes = await fetch(presign.presignedUrl, {
         method: "PUT",
         body: file,
-        headers: { "Content-Type": file.type },
+        headers: { "Content-Type": mimeType },
       });
       if (!uploadRes.ok) {
         throw new Error("Failed to upload file to storage");
       }
-      const type = file.type.startsWith("image/") ? "PHOTO" : "DOCUMENT";
+      const type = mimeType.startsWith("image/") ? "PHOTO" : "DOCUMENT";
       const res = await createEvidence(projectId, stageId, checkpointId, {
         type,
         fileUrl: presign.fileUrl,
         fileName: file.name,
         fileSizeBytes: file.size,
-        mimeType: file.type,
+        mimeType: mimeType,
         notes: notes || undefined,
         inspectionRequestId,
       });
@@ -230,6 +232,7 @@ export default function CheckpointWorkbench({
                 )}
               </div>
             </div>
+            <EvidenceGallery checkpointId={cp.id} refreshTrigger={uploadingId} />
           </article>
         );
       })}

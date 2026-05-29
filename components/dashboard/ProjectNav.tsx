@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, Layers, Users, Sliders, Settings } from "lucide-react";
 
 export default function ProjectNav({
   projectId,
@@ -17,35 +16,31 @@ export default function ProjectNav({
   const base = `/dashboard/projects/${projectId}`;
 
   const links = [
-    { name: "Overview", href: base, icon: LayoutDashboard },
-    { name: "Stages", href: `${base}/stages`, icon: Layers },
-    { name: "Team", href: `${base}/team`, icon: Users },
-    ...(stageId
-      ? [{ name: "Stage workbench", href: `${base}/stages/${stageId}`, icon: Sliders }]
-      : []),
-    ...(userRole === "OWNER"
-      ? [{ name: "Settings", href: `${base}/settings`, icon: Settings }]
-      : []),
+    { name: "Stages", href: `${base}/stages` },
+    { name: "Overview", href: base },
+    { name: "Team", href: `${base}/team` },
+    { name: "Documents", href: `${base}/documents` },
+    { name: "Reports", href: `${base}/reports` },
+    ...(userRole === "OWNER" ? [{ name: "Settings", href: `${base}/settings` }] : []),
   ];
 
   return (
-    <nav className="flex flex-wrap gap-1 p-1 bg-muted/50 rounded-lg border border-border w-fit">
+    <nav className="flex items-center gap-1 border-b border-slate-200 overflow-x-auto scrollbar-none -mx-4 px-4 sm:mx-0 sm:px-0">
       {links.map((link) => {
         const isActive =
           pathname === link.href ||
           (link.href !== base && pathname.startsWith(link.href));
-        const Icon = link.icon;
+
         return (
           <Link
             key={link.href}
             href={link.href}
-            className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold rounded-md transition-all ${
+            className={`relative px-3 py-2 text-sm font-semibold transition-colors whitespace-nowrap ${
               isActive
-                ? "bg-primary text-white shadow-sm"
-                : "text-muted-foreground hover:text-foreground"
+                ? "text-primary after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-primary after:rounded-full"
+                : "text-slate-500 hover:text-slate-800"
             }`}
           >
-            <Icon className="h-3.5 w-3.5" />
             {link.name}
           </Link>
         );

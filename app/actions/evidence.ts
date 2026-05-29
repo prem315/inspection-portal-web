@@ -11,6 +11,14 @@ export async function getEvidence(checkpointId: string) {
   }
 }
 
+export async function getEvidenceDetail(evidenceId: string) {
+  try {
+    return await fetchApi(`/api/evidence/${evidenceId}`);
+  } catch {
+    return null;
+  }
+}
+
 export async function getPresignedUrl(fileName: string, mimeType: string) {
   return fetchApi("/api/upload/presign", {
     method: "POST",
